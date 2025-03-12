@@ -18,17 +18,6 @@ public class Fraction {
     private int gcd(int a, int b) {
         return (b == 0) ? a : gcd(b, a % b);
     }
-//
-//    // Phương thức rút gọn phân số
-//    private void simplify() {
-//        int gcd = gcd(Math.abs(numerator), Math.abs(denominator));
-//        numerator /= gcd;
-//        denominator /= gcd;
-//        if (denominator < 0) { // Đảm bảo mẫu số luôn dương
-//            numerator = -numerator;
-//            denominator = -denominator;
-//        }
-//    }
 
     // Phương thức cộng phân số
     public Fraction add(Fraction other) {
@@ -62,7 +51,6 @@ public class Fraction {
     }
 
     // Phương thức hiển thị phân số
-    @Override
     public String toString() {
         return numerator + "/" + denominator;
     }
