@@ -1,10 +1,10 @@
 package bai10;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 // Lớp quản lý danh sách sinh viên
 public class StudentManager {
-    static ArrayList<Student> students = new ArrayList<>();
+    static Student[] students = new Student[100];
+    static int count = 0;
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -33,19 +33,23 @@ public class StudentManager {
     }
 
     static void displayStudents() {
-        if (students.isEmpty()) {
+        if (count == 0) {
             System.out.println("Danh sách trống.");
         } else {
-            for (Student s : students) {
-                s.displayData();
+            for (int i = 0; i < count; i++) {
+                students[i].displayData();
             }
         }
     }
 
     static void addStudent() {
-        Student student = new Student();
-        student.inputData(scanner);
-        students.add(student);
+        if (count >= students.length) {
+            System.out.println("Danh sách đã đầy!");
+            return;
+        }
+        students[count] = new Student();
+        students[count].inputData(scanner);
+        count++;
         System.out.println("Thêm thành công!");
     }
 
@@ -53,10 +57,10 @@ public class StudentManager {
         System.out.print("Nhập ID sinh viên cần sửa: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        for (Student s : students) {
-            if (s.id == id) {
+        for (int i = 0; i < count; i++) {
+            if (students[i].id == id) {
                 System.out.println("Nhập thông tin mới:");
-                s.inputData(scanner);
+                students[i].inputData(scanner);
                 System.out.println("Cập nhật thành công!");
                 return;
             }
@@ -68,8 +72,17 @@ public class StudentManager {
         System.out.print("Nhập ID sinh viên cần xóa: ");
         int id = scanner.nextInt();
         scanner.nextLine();
-        students.removeIf(s -> s.id == id);
-        System.out.println("Xóa thành công!");
+        for (int i = 0; i < count; i++) {
+            if (students[i].id == id) {
+                for (int j = i; j < count - 1; j++) {
+                    students[j] = students[j + 1];
+                }
+                students[count - 1] = null;
+                count--;
+                System.out.println("Xóa thành công!");
+                return;
+            }
+        }
+        System.out.println("Không tìm thấy sinh viên!");
     }
 }
-
